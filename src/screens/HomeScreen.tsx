@@ -61,7 +61,9 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.list}>
-        <Card />
+        {list.map((item) => (
+          <Card key={item.id} product={item} />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

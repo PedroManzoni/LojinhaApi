@@ -10,82 +10,79 @@ import { IProducts } from "../types/product";
 import { addProduct } from "../api/cart";
 import { GlobalContext } from "../context/GlobalContext";
 
-export default function Card() {
-  const [quantityClient, setQuantidadeClient] = useState<string>("1");
-  const { list, setList } = useContext(GlobalContext)!;
+interface props {
+  product: IProducts;
+}
 
-  const quantityClientAsNumber = Number(quantityClient) || 1;
+export default function Card({ product }: props) {
+  const [quantityClient, setQuantidadeClient] = useState<number>(1);
+  const { list, setList } = useContext(GlobalContext)!;
 
   const handleAddToCart = async (product: IProducts) => {
     try {
       const productToAdd = {
         description: product.description,
         amount: product.amount,
-        quantity: quantityClientAsNumber,
+        quantity: quantityClient,
         discount: 0,
       };
+      const response = await addProduct(productToAdd);
 
-      await addProduct(productToAdd);
-
-      const updatedList = list.map((item) =>
-        item.description === product.description
-          ? { ...item, inCart: true }
-          : item
-      );
-
-      setList(updatedList);
+      if (response.status === 200) {
+        const updatedList = list.map((item) =>
+          item.description === product.description
+            ? { ...item, inCart: true }
+            : item
+        );
+        setList(updatedList);
+      }
     } catch (error) {
       console.error("Erro ao adicionar produto ao carrinho:", error);
       alert("Erro ao adicionar produto ao carrinho.");
     }
   };
 
+  const precoTotal = product.amount * quantityClient;
+
   return (
     <View style={{ padding: 16 }}>
-      {list.map((item: IProducts, index) => {
-        const precoTotal = item.amount * quantityClientAsNumber;
+      <View style={styles.card}>
+        <Text style={styles.title}>{product.description}</Text>
+        <Text style={styles.price}>R$ {precoTotal.toFixed(2)}</Text>
 
-        return (
-          <View key={index} style={styles.card}>
-            <Text style={styles.title}>{item.description}</Text>
-            <Text style={styles.price}>R$ {precoTotal.toFixed(2)}</Text>
-
-            {item.inCart ? (
-              <Text
-                style={[styles.quantityText, { marginTop: 10, color: "green" }]}
+        {product.inCart ? (
+          <Text
+            style={[styles.quantityText, { marginTop: 10, color: "green" }]}
+          >
+            Produto adicionado ao carrinho!
+          </Text>
+        ) : (
+          <>
+            <View style={styles.quantityContainer}>
+              <Text style={styles.quantityText}>Quantas Unidades?</Text>
+              <TextInput
+                style={styles.input}
+                value={"1"}
+                onChangeText={(text) =>
+                  setQuantidadeClient(Number(text.replace(/[^0-9]/g, "")))
+                }
+                keyboardType="numeric"
+                placeholder="1"
+              />
+            </View>
+            <View style={styles.quantityContainer}>
+              <Text style={styles.quantityText}>Adicionar ao carrinho!</Text>
+              <TouchableOpacity
+                style={styles.qtdButton}
+                onPress={() => handleAddToCart(product)}
               >
-                Produto adicionado ao carrinho!
-              </Text>
-            ) : (
-              <>
-                <View style={styles.quantityContainer}>
-                  <Text style={styles.quantityText}>Quantas Unidades?</Text>
-                  <TextInput
-                    style={styles.input}
-                    value={quantityClient}
-                    onChangeText={(text) =>
-                      setQuantidadeClient(text.replace(/[^0-9]/g, ""))
-                    }
-                    keyboardType="numeric"
-                    placeholder="1"
-                  />
-                </View>
-                <View style={styles.quantityContainer}>
-                  <Text style={styles.quantityText}>
-                    Adicionar ao carrinho!
-                  </Text>
-                  <TouchableOpacity
-                    style={styles.qtdButton}
-                    onPress={() => handleAddToCart(item)}
-                  >
-                    <Text style={styles.qtdButtonText}>+</Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            )}
-          </View>
-        );
-      })}
+                <Text style={styles.qtdButtonText}>+</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
+      </View>
+      );
     </View>
   );
 }

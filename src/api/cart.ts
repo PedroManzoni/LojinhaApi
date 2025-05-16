@@ -24,7 +24,7 @@ export async function getCart() {
 
 export async function addProduct(product: Omit<IProducts, "id">) {
   const response = await api.post(`/${cpf}/add-product`, product);
-  return response.data;
+  return response;
 }
 
 export async function updateProductQuantity(
