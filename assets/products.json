@@ -1,0 +1,72 @@
+[
+  {
+    "description": "Camiseta Vermelha",
+    "quantity": 1,
+    "amount": 59.9,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Azul Marinho",
+    "quantity": 1,
+    "amount": 57.5,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Verde Musgo",
+    "quantity": 1,
+    "amount": 61.3,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Preta",
+    "quantity": 1,
+    "amount": 58.0,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Branca",
+    "quantity": 1,
+    "amount": 60.2,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Amarela",
+    "quantity": 1,
+    "amount": 56.9,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Cinza Chumbo",
+    "quantity": 1,
+    "amount": 62.4,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Laranja Neon",
+    "quantity": 1,
+    "amount": 55.7,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Lilás Pastel",
+    "quantity": 1,
+    "amount": 63.1,
+    "discount": 0,
+    "inCart": false
+  },
+  {
+    "description": "Camiseta Rosa Claro",
+    "quantity": 1,
+    "amount": 59.0,
+    "discount": 0,
+    "inCart": false
+  }
+]
